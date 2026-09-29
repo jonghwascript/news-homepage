@@ -1,28 +1,27 @@
 @charset "UTF-8";
 
-$font-primary: 'Roboto', sans-serif;
+$font-primary: "Inter", sans-serif;
 
-$font-size-preset1: 56px;
-$font-size-preset2: 16px;
-$font-size-preset3: 12px;
 
-$grey-100: #e7eaee;
-$grey-200: #cfcfcf;
-$grey-300: #a3aab4;
-$grey-400: #676d7e;
-$grey-500: #48556a;
+$White : #FFFFFF;
+$Black : #000000;
 
-$bg-white: #ffffff;
-$bg-gray: #949494;
-$bg-blue-800: #242742;
-$bg-blue-700: #36384d;
-$bg-red: #ff6155;
+$Grey-300: #C5C6CE;
+$Grey-200: #D8D8D8;
 
-$bg-gradient: linear-gradient(
-  0deg,
-  rgba(255, 106, 58, 1) 0%,
-  rgba(255, 82, 123, 1) 100%
-);
+$Navy-950: #00001A;
+$Navy-600: #5E607A;
+
+$Gold-400: #E9AA52;
+$Red-500: #F15D51;
+
+$Soft-orange: hsl(35, 77%, 62%);
+$Soft-red: hsl(5, 85%, 63%);
+$Off-white: hsl(36, 100%, 99%);
+$Grayish-blue: hsl(233, 8%, 79%);
+$Dark-grayish-blue: hsl(236, 13%, 42%);
+$Very-dark-blue: hsl(240, 100%, 5%);
+
 
 // 🌟 새 챌린지를 시작할 때 README의 "Layout" 섹션 값으로 아래 두 숫자만 교체하면 된다.
 // 모바일은 breakpoint가 아니라 mobile-first 기본 스타일이므로 맵에 넣지 않는다.
