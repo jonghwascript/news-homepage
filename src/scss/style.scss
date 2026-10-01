@@ -124,9 +124,15 @@ body {
 
         a {
           color: $Navy-950;
+          &:hover,
+          &:focus-visible {
+            text-decoration: underline;
+            text-underline-offset: 0.25em;
+          }
 
-          &:focus {
-            color: $Red-500;
+          &:focus-visible {
+            outline: 2px solid $Navy-950;
+            outline-offset: 3px;
           }
         }
       }
@@ -260,6 +266,17 @@ body {
       text-transform: uppercase;
       text-align: center;
       background-color: $Red-500;
+
+      &:hover,
+      &:focus-visible {
+        background-color: $Navy-950;
+        color: $White;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $Navy-950;
+        outline-offset: 3px;
+      }
     }
   }
 }
@@ -339,13 +356,13 @@ body {
 
 
   .article-list {
-    --sapce: 2rem; //32px
+    --space: 2rem; //32px
 
     @include mq('desktop') {
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
-      --sapce: 2.5rem; //40px
+      --space: 2.5rem; //40px
 
       >article {
         // 콘텐츠 크기 무시, 완벽한 등분
