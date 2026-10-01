@@ -378,10 +378,8 @@ body {
     flex-wrap: wrap;
 
     .article__image {
-      width: 6.25rem;
-      min-width: 0;
-      max-width: 6.25rem;
-      flex: 0 0 6.25rem;
+      flex: 0 1 6.25rem; /* 6.25rem을 유지하되, 화면이 좁아지면 유연하게 줄어들어라(1) */
+      min-width: 0;      /* Flex 자식의 기본 방어막을 해제하여 부드럽게 축소되도록 허용 */
       object-fit: contain;
     }
 
