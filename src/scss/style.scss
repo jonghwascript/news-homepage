@@ -8,10 +8,408 @@
 
 body {
   // 브라우저 기본 16px의 93.75% = 15px
+  font-family: $font-primary;
   font-size: 93.75%;
 }
 
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10000;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  color: #000;
+  text-decoration: underline;
+  transform: translateY(calc(-100% - 2rem));
+
+  &:focus {
+    transform: translateY(0);
+  }
+}
+
+.container {
+  margin-block-start: 1.75rem; //28px
+
+  @include mq('desktop') {
+    margin-block: auto;
+  }
+
+  max-inline-size: clamp(21.4375rem, calc(90.137px + 67.43vw), 38rem); //343px ~ 608px;
+  --s1: 1rem; //16px;
+
+  @include mq('desktop') {
+    max-inline-size: 69.5rem; //1112px;
+  }
+}
+
+/* ################# Section : news-header  ################ */
+.news-header {
+  display: flex;
+
+  .news-logo {
+    margin-block-start: 0;
+    width: 50px;
+    height: 28px;
+
+    .svg-icon {
+      max-inline-size: 100%;
+      block-size: auto;
+      aspect-ratio: 65 / 40;
+    }
+  }
+
+  .nav-toggle {
+    margin-inline-start: auto;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+
+    @include mq('desktop') {
+      display: none;
+    }
+  }
+
+  .news-nav {
+    display: flow-root;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: clamp(16rem, calc(15.284rem + 3.053vw), 16.75rem); //256px
+    height: 100dvh;
+    overflow-y: auto;
+    background-color: $White;
+    z-index: 9999;
+
+    padding-inline: 1.3125rem; //21px
+    padding-block: 1.6875rem; //27px
+
+    transition: all 0.3s ease-out;
+    transform: translateX(16.875rem);
+
+    //사용자가 운영체제에서 **‘동작 줄이기’**를 켰을 때 메뉴의 슬라이드 애니메이션을 끄는 설정
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
+    visibility: hidden;
+
+    .close {
+      float: right;
+      width: 1.875rem; //30px
+      height: 1.875rem; //30px
+      background-color: transparent;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+
+      svg {
+        width: 100%;
+      }
+    }
+
+    .news-nav__link {
+      margin-top: 9.0625rem; //145px
+
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem; //24px
+
+      li {
+        font-family: $font-primary;
+        font-size: 1.125rem; //18px
+        font-weight: 400;
+        color: $Navy-950;
+
+        a {
+          color: $Navy-950;
+
+          &:focus {
+            color: $Red-500;
+          }
+        }
+      }
+    }
+
+    @include mq('desktop') {
+      display: contents;
+      visibility: visible;
+
+      // 데스크탑에서는 비노출
+      .close {
+        display: none;
+      }
+
+      .news-nav__link {
+        margin-inline-start: auto;
+        margin-block-start: 0;
+        flex-direction: row;
+      }
+    }
+  }
+
+  @media (width < 1024px) {
+    &:has(.nav-toggle[aria-expanded="true"]) {
+      .news-nav {
+        visibility: visible;
+        transform: translateX(0);
+      }
+    }
+  }
+}
+
+.page {
+  margin-block-start: 2rem; //32px
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "hero"
+    "latest"
+    "featured"
+  ;
+
+  row-gap: 4rem; //64px
+
+  @include mq('desktop') {
+    // 560px ~ 730px이 최대치, 그보다 좁아지면 남은 공간(1fr)만큼 유연하게 축소됨 
+    grid-template-columns: minmax(clamp(35rem, 8.846rem + 40.865vw, 45.625rem), 1fr) 1fr;
+    grid-template-rows: repeat(3, auto);
+    grid-template-areas:
+      "hero latest"
+      "hero latest"
+      "featured featured"
+    ;
+
+    column-gap: 2rem; //32px
+    row-gap: 1.5rem; //24px
+  }
+}
+
+
+/* ################# Section : hero   ################ */
+
+.hero {
+  grid-area: hero;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; //24px
+
+  @include mq('desktop') {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: max-content 1fr;
+    grid-template-areas:
+      "img img"
+      "title desc"
+    ;
+
+    row-gap: 1.5rem; //24px
+    column-gap: 2rem; //32px
+  }
+
+  .hero__image {
+    img {
+      max-inline-size: 100%;
+    }
+
+    @include mq('desktop') {
+      border: 1px solid #000;
+      grid-area: img;
+    }
+  }
+
+  .hero__title {
+    font-family: $font-primary;
+    font-weight: 800;
+    font-size: 2.5rem; //40px
+    line-height: 2.5rem; //40px
+    color: $Navy-950;
+
+    @include mq('desktop') {
+      grid-area: title;
+      font-size: 3.5rem; //56px
+      line-height: 3.5rem; //56px
+    }
+  }
+
+  .text_inner {
+    --space: 1.5rem;
+
+    .hero__text {
+      font-family: $font-primary;
+      font-weight: 400;
+      line-height: 1.625rem; //26px
+      color: $Navy-600;
+
+      @include mq('desktop') {
+        grid-area: desc;
+      }
+    }
+
+    .hero__link {
+      width: 11.5625rem; //185px
+      display: inline-block;
+      margin: 0;
+      padding: 0.5rem 2rem; //8px 32px
+      font-family: $font-primary;
+      font-weight: 700;
+      font-size: 0.875rem; //14px
+      color: $Navy-950;
+      text-decoration: none;
+      text-transform: uppercase;
+      text-align: center;
+      background-color: $Red-500;
+    }
+  }
+}
+
+/* ################# Section : latest-articles  ################ */
+.latest-articles {
+  grid-area: latest;
+  background-color: $Navy-950;
+  padding: 1rem 1.5rem; //16px 24px
+  --space: 2rem; //32px
+
+  .section-title {
+    font-family: $font-primary;
+    font-weight: 700;
+    font-size: 2rem; //32px
+    color: $Gold-400;
+
+    @include mq('tablet') {
+      font-size: 2.5rem; //40px
+    }
+
+    @include mq('desktop') {
+      font-size: 2rem; //32px
+    }
+  }
+
+  .article-list {
+    --space: 2rem; //32px
+
+    .article-card {
+      --space: 0.5rem; //8px
+      position: relative;
+
+      .article-card__title {
+        font-family: $font-primary;
+        font-weight: 800;
+        color: $White;
+        font-size: 1.25rem; //20px
+
+        a {
+          color: inherit;
+          cursor: pointer;
+
+          &:hover,
+          &:focus-visible {
+            color: $Gold-400;
+          }
+        }
+      }
+
+      .article-card__body {
+        font-family: $font-primary;
+        font-weight: 400;
+        color: $Grey-300;
+        font-size: 0.9375rem; //15px
+        line-height: 1.625rem; //26px
+      }
+
+      &:not(:first-child)::before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 1px;
+        background-color: $Navy-600;
+        margin-block-end: 2rem; //32px
+      }
+    }
+  }
+}
+
+
+/* ################# Section : featured-articles  ################ */
+.featured-articles {
+  grid-area: featured;
+  // 카드가 렌더링될 때마다 'news-number'가 1씩 올라갑니다
+  counter-reset: news-number;
+
+
+  .article-list {
+    --sapce: 2rem; //32px
+
+    @include mq('desktop') {
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      --sapce: 2.5rem; //40px
+
+      >article {
+        // 콘텐츠 크기 무시, 완벽한 등분
+        flex: 1;
+      }
+    }
+  }
+
+  .article-card {
+    counter-increment: news-number;
+    display: flex;
+    gap: 1.5rem; //24px
+    flex-wrap: wrap;
+
+    .article__image {
+      width: 100%;
+      flex: 0 0 6.25rem; //100px
+      object-fit: contain;
+    }
+
+    .article-cart__text {
+      flex: 1;
+      position: relative;
+      --space: 0.5rem;
+
+      &::before {
+        content: counter(news-number, decimal-leading-zero);
+        font-family: $font-primary;
+        font-weight: 700;
+        font-size: 2rem; //32px
+        color: $Red-500;
+      }
+
+      .article-card__title {
+        font-family: $font-primary;
+        font-weight: 800;
+        font-size: 1.125rem; //18px
+        color: $Navy-950;
+
+        a {
+          color: inherit;
+          cursor: pointer;
+
+          &:hover,
+          &:focus-visible {
+            color: $Red-500;
+          }
+        }
+      }
+
+      .article-card__body {
+        font-family: $font-primary;
+        font-weight: 400;
+        font-size: 1rem; //16px
+        color: $Navy-600;
+      }
+    }
+  }
+}
+
+/* ################# Section : footer  ################ */
+
 .attribution {
+  margin-block: 2rem;
   font-size: 0.6875rem;
   text-align: center;
 }

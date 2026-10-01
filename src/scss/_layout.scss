@@ -21,7 +21,7 @@
 }
 
 // 4. 자식 요소들의 기본 세로 여백 '백지화' (충돌 방지 핵심!)
-.stack > * {
+.stack>* {
   margin-block: 0;
 }
 
@@ -46,7 +46,7 @@
 // 마법의 유틸리티: 공간 밀어내기
 // ----------------------------------
 // 특정 요소부터 맨 아래로 확 밀어버리고 싶을 때 사용합니다.
-.stack > .push-bottom {
+.stack>.push-bottom {
   margin-block-start: auto;
 }
 
@@ -60,12 +60,12 @@
 }
 
 // 2. 부엉이 선택자: 첫 번째를 제외한 "모든 인접 형제 자손"의 위쪽에 마진 주입
-.stack[data-recursive] * + * {
+.stack[data-recursive] *+* {
   margin-block-start: var(--space, 1.5rem);
 }
 
 //부모 컴포넌트: '나누는 스택'
-.stack-divided > * + * {
+.stack-divided>*+* {
   //첫 번째를 제외한 모든 자식들의 '위쪽'에만 마진과 테두리를 줍니다!
   margin-block-start: 1.5rem;
   padding-block-start: 1.5rem;
@@ -199,12 +199,14 @@
   // 기본값은 모듈러 스케일 첫 번째 단계
   gap: var(--gutter, var(--s1, 1.5rem));
 }
-.with-sidebar > :first-child {
+
+.with-sidebar> :first-child {
   // 사이드바로 쓰일 때의 기본 너비
   flex-basis: 20rem;
   flex-grow: 1;
 }
-.with-sidebar > :last-child {
+
+.with-sidebar> :last-child {
   // 처음엔 너비 0에서 시작해서 남은 공간을 꽉 채움
   flex-basis: 0;
   flex-grow: 999;
@@ -222,14 +224,16 @@
   // 레이아웃이 세로로 깨지는(breaks) 임계점 설정
   --threshold: 30rem;
 }
-.switcher > * {
+
+.switcher>* {
   // 자식 요소들이 커질 수 있도록 허용
   flex-grow: 1;
   // --threshold를 기준으로 가로/세로 레이아웃 자동 전환 (수학적 트릭)
   flex-basis: calc((var(--threshold) - 100%) * 999);
 }
-.switcher > :nth-last-child(n + 5),
-.switcher > :nth-last-child(n + 5) ~ * {
+
+.switcher> :nth-last-child(n + 5),
+.switcher> :nth-last-child(n + 5)~* {
   // 자식 요소가 4개를 초과하면 무조건 세로 배치로 전환
   flex-basis: 100%;
 }
@@ -247,22 +251,10 @@
   // 패딩 값 설정
   padding: var(--space);
 }
-.cover > * {
+
+.cover>* {
   // 각 자식 요소에 위아래 마진 부여
   margin-block: var(--s1, 1.5rem);
-}
-.cover > :first-child:not(h1) {
-  // 첫 번째 자식이 중앙 요소(h1)가 아니면 위쪽 마진 제거 (천장에 붙임)
-  margin-block-start: 0;
-}
-.cover > :last-child:not(h1) {
-  // 마지막 자식이 중앙 요소(h1)가 아니면 아래쪽 마진 제거 (바닥에 붙임)
-  margin-block-end: 0;
-}
-.cover > h1,
-.cover > .center {
-  // 중앙 요소(여기서는 h1)를 사용 가능한 세로 공간의 정중앙에 배치
-  margin-block: auto;
 }
 
 // ==========================================
@@ -276,13 +268,12 @@
   // 최소 열 너비 설정
   --minimum: 20ch;
 }
+
 @supports (width: min(var(--minimum), 100%)) {
   .grid {
     // min() 함수를 활용하여 미디어 쿼리 없이 다중 열 생성 (RAM 패턴)
-    grid-template-columns: repeat(
-      auto-fit,
-      minmax(min(var(--minimum), 100%), 1fr)
-    );
+    grid-template-columns: repeat(auto-fit,
+        minmax(min(var(--minimum), 100%), 1fr));
   }
 }
 
@@ -298,8 +289,9 @@
   justify-content: center;
   align-items: center;
 }
-.frame > img,
-.frame > video {
+
+.frame>img,
+.frame>video {
   inline-size: 100%;
   block-size: 100%;
   // 비율이 깨지지 않게 꽉 채움 (크롭 발생)
@@ -325,31 +317,34 @@
   // Firefox용 스크롤바 색상
   scrollbar-color: var(--color-light) var(--color-dark);
 }
+
 // 🚨 버그 수정: 원본의 reel-l(웹컴포넌트)을 .reel(클래스)로 모두 변경
 .reel::-webkit-scrollbar {
   // 스크롤바 높이
   block-size: 1rem;
 }
+
 .reel::-webkit-scrollbar-track {
   background-color: var(--color-dark);
 }
+
 .reel::-webkit-scrollbar-thumb {
   background-color: var(--color-dark);
   // 🚨 오타 수정: var(--color- dark) -> var(--color-dark)
   // 선형 그래디언트를 사용해 검은 막대 안에 흰색 썸네일을 '삽입(inset)'한 것처럼 연출
-  background-image: linear-gradient(
-    var(--color-dark) 0,
-    var(--color-dark) 0.25rem,
-    var(--color-light) 0.25rem,
-    var(--color-light) 0.75rem,
-    var(--color-dark) 0.75rem
-  );
+  background-image: linear-gradient(var(--color-dark) 0,
+      var(--color-dark) 0.25rem,
+      var(--color-light) 0.25rem,
+      var(--color-light) 0.75rem,
+      var(--color-dark) 0.75rem);
 }
-.reel > * {
+
+.reel>* {
   // 그냥 width를 주면 flex-shrink(기본값 1) 때문에 줄어들 수 있으므로 flex 속성 사용
   flex: 0 0 var(--item-width);
 }
-.reel > img {
+
+.reel>img {
   // 이미지 초기화
   block-size: 100%;
   flex-basis: auto;
@@ -368,6 +363,7 @@
   // 요소의 정중앙이 컨테이너의 정중앙이 되도록 재배치
   transform: translate(-50%, -50%);
 }
+
 .imposter.contain {
   // calc 함수가 무효화되지 않도록 단위를 반드시 포함해야 함
   --margin: 0px;
@@ -388,11 +384,13 @@
   width: 0.75em;
   width: 1cap;
 }
+
 .with-icon {
   // 단어 사이의 공백(word space)을 없애주는 인라인 플렉스 문맥
   display: inline-flex;
   align-items: baseline;
 }
+
 .with-icon .icon {
   // 논리적 속성을 사용하여 텍스트 읽는 방향에 맞춰 여백 적용
   margin-inline-end: var(--space, 0.5em);
