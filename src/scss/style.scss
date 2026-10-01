@@ -361,8 +361,10 @@ body {
     flex-wrap: wrap;
 
     .article__image {
-      width: 100%;
-      flex: 0 0 6.25rem; //100px
+      width: 6.25rem;
+      min-width: 0;
+      max-width: 6.25rem;
+      flex: 0 0 6.25rem;
       object-fit: contain;
     }
 
